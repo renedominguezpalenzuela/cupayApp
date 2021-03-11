@@ -1,4 +1,5 @@
 import 'package:cupay/providers/UserDatos.dart';
+import 'package:cupay/screens/registration/Register01.dart';
 import 'package:flutter/material.dart';
 import 'package:cupay/screens/HomeScreen.dart';
 import 'package:cupay/screens/LoginScreen.dart';
@@ -28,9 +29,8 @@ class MyApp extends StatelessWidget {
           routes: {
             "/splash": (BuildContext context) => SplashScreen(),
             "/login": (BuildContext context) => LoguinScreen(),
-            "/home": (BuildContext context) {
-              return MyHomePage();
-            },
+            "/home": (BuildContext context) { return MyHomePage(); },
+            "/register01" :  (BuildContext context) => Register01Screen()
           }),
     );
   }

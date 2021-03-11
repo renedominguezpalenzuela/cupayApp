@@ -2,6 +2,9 @@ import 'package:cupay/providers/UserDatos.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+//TODO: boton del teclado, continuar, finalizar etc...
+//TODO: ojito del password field
+
 class LoguinScreen extends StatefulWidget {
   LoguinScreen({Key key}) : super(key: key);
 
@@ -15,16 +18,26 @@ class _LoguinScreenState extends State<LoguinScreen> {
 
   final formKey = GlobalKey<FormState>();
 
+  bool _passwordVisible;
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordVisible = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     //Clase global de datos
+    // ignore: unused_local_variable
     final usuario = Provider.of<UserDatos>(context);
 
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Flexible( //------------ Area superior Texto: Welcome ----------------
+          Flexible(
+              //------------ Area superior Texto: Welcome ----------------
               flex: 3,
               child: Container(
                 height: MediaQuery.of(context).size.height,
@@ -44,25 +57,29 @@ class _LoguinScreenState extends State<LoguinScreen> {
                         image: AssetImage("assets/top_background.png"),
                         fit: BoxFit.fill)),
               )),
-          Flexible( // ------------- Formulario ----------------------------------
+          Flexible(
+              // ------------- Formulario ----------------------------------
               flex: 6,
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width * 0.7,
                 // color: Colors.teal,
-                child: SingleChildScrollView(//-al entrar en un TextFormField salian las rallitas verdes y negras
+                child: SingleChildScrollView(
+                  //-al entrar en un TextFormField salian las rallitas verdes y negras
                   child: Form(
                     key: formKey,
 
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Container( //--------------Entrar el nombre ------------------------
+                        Container(
+                          //--------------Entrar el nombre ------------------------
                           margin: EdgeInsets.only(top: 50, bottom: 20),
                           child: TextFormField(
                               decoration: InputDecoration(
                                 labelText: 'Enter your Name',
-                                labelStyle: TextStyle( fontWeight: FontWeight.bold),
+                                labelStyle:
+                                    TextStyle(fontWeight: FontWeight.bold),
                                 prefixIcon: Icon(Icons.person),
                               ),
                               onSaved: (value) {
@@ -76,66 +93,83 @@ class _LoguinScreenState extends State<LoguinScreen> {
                                 }
                               }),
                         ),
-                        Container( //--------------Entrar el password ------------------------
+                        Container(
+                          //--------------Entrar el password ------------------------
                           margin: EdgeInsets.only(top: 10),
                           child: TextFormField(
+                              obscureText: !_passwordVisible,
                               decoration: InputDecoration(
-                                
-                                  labelStyle: TextStyle( fontWeight: FontWeight.bold),
-                                  labelText: 'Enter your password',
-                                
-                                  prefixIcon: Icon(Icons.vpn_key)),
+                                labelStyle:
+                                    TextStyle(fontWeight: FontWeight.bold),
+                                labelText: 'Enter your password',
+                                prefixIcon: Icon(Icons.vpn_key),
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    // Based on passwordVisible state choose the icon
+                                    _passwordVisible ? Icons.visibility : Icons.visibility_off,
+                                    color: Theme.of(context).primaryColorDark,
+                                  ),
+                                  onPressed: () {
+                                    // Update the state i.e. toogle the state of passwordVisible variable
+                                    setState(() {
+                                      print(_passwordVisible);
+                                      _passwordVisible = !_passwordVisible;
+                                    });
+                                  },
+                                ),
+                              ),
                               onSaved: (value) {
                                 passUsuario = value;
                               }),
                         ),
-                        Container( //--------------Boton ------------------------
+                        Container(
+                          //--------------Boton ------------------------
                           height: 40,
                           margin: EdgeInsets.only(top: 80),
                           child: FractionallySizedBox(
                             widthFactor: 0.8,
                             child: MaterialButton(
-                                color: Color.fromARGB(255, 17,228, 45), 
+                                color: Color.fromARGB(255, 17, 228, 45),
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18.0),
                                     side: BorderSide(color: Colors.red)),
                                 child: Text('Sign In',
                                     style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white)),
+                                        fontSize: 20, color: Colors.white)),
                                 onPressed: () {
                                   _showSecondPage(context);
                                 }),
                           ),
                         ),
-                        
                       ],
                     ), //Column
                   ),
                 ),
               )),
-              Flexible(
-                flex: 1,
-                child: Container(
-                          
-                            child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: <Widget>[
-                                  TextButton(
-                                  child: Text('Forgot Password?'),
-                                  style: TextButton.styleFrom(primary: Colors.black45),
-                                  onPressed: () {
-                                    print('Pressed');
-                                  }),
-                                  TextButton(
-                                  child: Text('Sign Up'),
-                                  style: TextButton.styleFrom(primary: Colors.black45),
-                                  onPressed: () {
-                                    print('Pressed');
-                                  })
-                            ])),
-              )
+          Flexible(
+            flex: 1,
+            child: Container(
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: <Widget>[
+                  TextButton(
+                      child: Text('Forgot Password?'),
+                      style: TextButton.styleFrom(primary: Colors.black45),
+                      onPressed: () {
+                        print('Pressed');
+                      }),
+                  TextButton(
+                      child: Text('Sign Up'),
+                      style: TextButton.styleFrom(primary: Colors.black45),
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          '/register01',
+                        );
+                      })
+                ])),
+          )
         ],
       ),
     );
