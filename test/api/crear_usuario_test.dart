@@ -5,20 +5,28 @@ import 'package:test/test.dart';
 import 'dart:convert';
 
 void main() {
+
+   String nombreUsuario = "juan";
+    String passUsuario = "Abc123*";
+    String hardWareId = "ASDFGH";
+
   test('Crear usuario', () async {
     ApiUtiles api = ApiUtiles();
-    Map resultado = await api.loguinUser();
+   
+
+    Map resultado =
+        await api.loguinUser(nombreUsuario, passUsuario, hardWareId);
     expect(resultado['cod_resp'], "000");
   });
 
   test('Verify Email', () async {
     ApiUtiles api = ApiUtiles();
     // ignore: non_constant_identifier_names
-    Map respuesta_loguin = await api.loguinUser();
+    Map respuesta_loguin = await api.loguinUser(nombreUsuario, passUsuario, hardWareId);
     String token = respuesta_loguin['token'];
 
     Map resultado = await api.verifyEmail(token);
-    
+
     expect(resultado['cod_resp'], "000");
   });
 

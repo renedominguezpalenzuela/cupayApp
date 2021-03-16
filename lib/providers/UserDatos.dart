@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class UserDatos  with ChangeNotifier {
+class UserDatos with ChangeNotifier {
   String _nombreUsuario = 'usuario 1';
   String _passUsuario = 'password 1';
 
@@ -12,12 +12,11 @@ class UserDatos  with ChangeNotifier {
     _nombreUsuario = nombre;
   }
 
-    get getPass {
+  get getPass {
     return _passUsuario;
   }
 
   set setPass(String pass) {
     _passUsuario = pass;
   }
-
 }

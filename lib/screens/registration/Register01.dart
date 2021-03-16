@@ -116,8 +116,10 @@ class _Register01ScreenState extends State<Register01Screen> {
                           //--------------Entrar el nombre ------------------------
                           margin: EdgeInsets.only(top: 30, bottom: 5),
                           child: TextFormField(
+                             //initialValue: '\$',
                               decoration: InputDecoration(
-                                labelText: 'User name',
+                                
+                                labelText: '\$Cash Tag',
                                 labelStyle:
                                     TextStyle(fontWeight: FontWeight.bold),
                                 prefixIcon: Icon(Icons.person),
